@@ -1,0 +1,10 @@
+class_name: AcceptanceTester
+modules:
+    enabled:
+        - PhpBrowser:
+            url: http://yii2-codecoverage-web
+        - Yii2:
+            part: init
+
+coverage:
+    remote: true

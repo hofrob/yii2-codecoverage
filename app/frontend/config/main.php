@@ -36,14 +36,13 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        /*
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                'c3/<url:(.*)>' => 'site/c3',
             ],
         ],
-        */
     ],
     'params' => $params,
 ];

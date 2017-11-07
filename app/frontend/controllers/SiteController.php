@@ -65,6 +65,11 @@ class SiteController extends Controller
         ];
     }
 
+    public function actionC3()
+    {
+        include('../../c3.php');
+    }
+
     /**
      * Displays homepage.
      *
