@@ -1,0 +1,42 @@
+version: "3.3"
+
+volumes:
+  yii2-codecoverage-postgres:
+
+services:
+
+  yii2-codecoverage-database:
+    image: postgres:10-alpine
+    container_name: yii2-codecoverage-database
+    ports:
+      - "5432:5432"
+    env_file:
+      - ./application/variables.env
+    volumes:
+      - yii2-codecoverage-postgres:/var/lib/postgresql/data
+
+  yii2-codecoverage-application:
+    build:
+      context: application
+    container_name: yii2-codecoverage-application
+    working_dir: /code
+    env_file:
+      - ./application/variables.env
+    environment:
+      - HTTP_USER
+      - HTTP_GROUP
+    volumes:
+      - ../app:/code
+      - ./application/entrypoint.py:/docker/entrypoint.py
+      - ./application/wait-for-it.sh:/docker/wait-for-it.sh
+      - ./application/php.ini:/usr/local/etc/php/php.ini
+
+  yii2-codecoverage-web:
+    container_name: yii2-codecoverage-web
+    image: nginx:1.12
+    working_dir: /etc/nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ../app/frontend/web:/code/frontend/web
